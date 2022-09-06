@@ -31,7 +31,7 @@ pushd $tcdir > /dev/null
     echo ""
 
     echo "Running Style Checks on dc extension source"
-    azdev style dc
+    # azdev style dc
     echo ""
 
     echo "Building dc extension"

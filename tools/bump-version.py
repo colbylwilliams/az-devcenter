@@ -53,7 +53,7 @@ version_new = parse('{}.{}.{}'.format(n_major, n_minor, n_patch))
 print('bumping version: {} -> {}'.format(version_old.public, version_new.public))
 
 fmt_setup = 'VERSION = \'{}\''
-fmt_readme = 'https://github.com/colbylwilliams/az-devcenter/releases/latest/download/dc-{}-py2.py3-none-any.whl'
+fmt_readme = 'https://github.com/colbylwilliams/az-devcenter/releases/latest/download/dc-{}-py3-none-any.whl'
 fmt_readme = '{}\n++++++\n{}\n\n{}'
 
 

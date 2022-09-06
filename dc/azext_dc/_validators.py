@@ -10,6 +10,8 @@ from knack.log import get_logger
 
 logger = get_logger(__name__)
 
+# pylint: disable=unused-argument,
+
 
 def prefix_validator(cmd, ns):
     if not ns.prefix:
@@ -32,6 +34,18 @@ def dc_source_version_validator(cmd, ns):
 
         if not github_release_version_exists(ns.version):
             raise CLIError(f'--version/-v {ns.version} does not exist')
+
+
+def user_validator(cmd, ns):
+    # Make sure these arguments are non-empty strings.
+    # When they are accidentally provided as an empty string "", they won't take effect when filtering the role
+    # assignments, causing all matched role assignments to be listed/deleted. For example,
+    #   az role assignment delete --assignee ""
+    # removes all role assignments under the subscription.
+    if getattr(ns, 'user_id') == "":
+        # Get option name, like user_id -> --user-id
+        option_name = cmd.arguments['user_id'].type.settings['options_list'][0]
+        raise CLIError(f'usage error: {option_name} can\'t be an empty string.')
 
 
 def _is_valid_url(url):

@@ -3,7 +3,7 @@
 # Licensed under the MIT License.
 # ------------------------------------
 
-from collections import OrderedDict
+# from collections import OrderedDict
 
 from knack.log import get_logger
 

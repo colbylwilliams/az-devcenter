@@ -34,7 +34,7 @@ with open(path_dc / 'setup.py', 'r') as f:
             match = search(r'VERSION = [\'\"](.*)[\'\"]$', txt)
             if match:
                 cli_version = match.group(1)
-                cli_name = 'dc-{}-py2.py3-none-any.whl'.format(cli_version)
+                cli_name = 'dc-{}-py3-none-any.whl'.format(cli_version)
 
 version = f'v{cli_version}'
 

@@ -7,7 +7,7 @@ Microsoft Azure CLI DevCenter Helper 'az' Extension adds useful "utilities" for 
 To install the Azure CLI DevCenter Helper extension, simply run the following command:
 
 ```sh
-az extension add --source https://github.com/colbylwilliams/az-devcenter/releases/latest/download/dc-0.0.1-py2.py3-none-any.whl -y
+az extension add --source https://github.com/colbylwilliams/az-devcenter/releases/latest/download/dc-0.0.1.py3-none-any.whl -y
 ```
 
 ### Update
