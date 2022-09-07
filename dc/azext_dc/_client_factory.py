@@ -27,6 +27,10 @@ def auth_client_factory(cli_ctx, scope=None):
 #     client = GraphClient(cli_ctx)
 #     return client
 
+def get_graph_client(cli_ctx):
+    from azure.cli.command_modules.role import graph_client_factory
+    return graph_client_factory(cli_ctx)
+
 
 def devcenter_client_factory(cli_ctx, *_):
     from azext_dc.vendored_sdks.devcenter import DevCenter
@@ -36,7 +40,7 @@ def devcenter_client_factory(cli_ctx, *_):
 # https://github.com/tbyfield/azure-cli-extensions/blob/main/src/devcenter/azext_devcenter/manual/_client_factory.py
 
 
-def cf_devcenter_dataplane(cli_ctx, dev_center, *_):
+def devcenter_dataplane_client_factory(cli_ctx, dev_center, *_):
 
     from azure.cli.core._profile import Profile
 

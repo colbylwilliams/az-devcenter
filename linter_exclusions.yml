@@ -1,0 +1,30 @@
+dc box list:
+  parameters:
+    dev_center:
+      rule_exclusions:
+        - bad_short_option
+dc box start:
+  parameters:
+    dev_center:
+      rule_exclusions:
+        - bad_short_option
+dc box stop:
+  parameters:
+    dev_center:
+      rule_exclusions:
+        - bad_short_option
+dc project box list:
+  parameters:
+    dev_center:
+      rule_exclusions:
+        - bad_short_option
+dc project box start:
+  parameters:
+    dev_center:
+      rule_exclusions:
+        - bad_short_option
+dc project box stop:
+  parameters:
+    dev_center:
+      rule_exclusions:
+        - bad_short_option

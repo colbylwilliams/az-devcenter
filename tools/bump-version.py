@@ -12,7 +12,7 @@ from packaging.version import parse  # pylint: disable=unresolved-import
 parser = argparse.ArgumentParser()
 parser.add_argument('--major', action='store_true', help='bump major version')
 parser.add_argument('--minor', action='store_true', help='bump minor version')
-parser.add_argument('--notes', nargs='*', default=['Bug fixes and minor improvements.'], help='bump minor version')
+parser.add_argument('--notes', nargs='*', default=['Bug fixes and minor improvements.'], help='space seperated strings with release notes')
 
 args = parser.parse_args()
 
@@ -54,7 +54,7 @@ print('bumping version: {} -> {}'.format(version_old.public, version_new.public)
 
 fmt_setup = 'VERSION = \'{}\''
 fmt_readme = 'https://github.com/colbylwilliams/az-devcenter/releases/latest/download/dc-{}-py3-none-any.whl'
-fmt_readme = '{}\n++++++\n{}\n\n{}'
+fmt_history = '{}\n++++++\n{}\n\n{}'
 
 
 print('..updating setup.py')
@@ -73,7 +73,7 @@ print('..updating HISTORY.rst')
 with open(path_dc / 'HISTORY.rst', 'r') as f:
     history = f.read()
 
-history = history.replace(version_old.public, fmt_readme.format(version_new.public, notes, version_old.public))
+history = history.replace(version_old.public, fmt_history.format(version_new.public, notes, version_old.public))
 
 with open(path_dc / 'HISTORY.rst', 'w') as f:
     f.write(history)
