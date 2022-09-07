@@ -24,11 +24,26 @@ or for the latest pre-release version:
 az dc upgrade --pre
 ```
 
-# Commands
+## Commands
 
 This extension adds the following commands.  Use `az dc -h` for more information.
+| Command | Description |
+| ------- | ----------- |
+| [az dc user check](#az-dc-user-check) | Check if a user has appropriate licenses to use dev box. |
+| [az dc box list](#az-dc-box-list) | List dev boxes. |
+| [az dc box start](#az-dc-box-start) | Start dev boxes. |
+| [az dc box stop](#az-dc-box-stop) | Stop dev boxes. |
+| [az dc project box list](#az-dc-project-box-list) | List project dev boxes. |
+| [az dc project box start](#az-dc-project-box-start) | Start project dev boxes. |
+| [az dc project box stop](#az-dc-project-box-stop) | Stop project dev boxes. |
+| [az dc project user add](#az-dc-project-user-add) | Add a dev box user to a project. |
+| [az dc project user remove](#az-dc-project-user-remove) | Remove a dev box user from a project. |
+| [az dc project admin add](#az-dc-project-admin-add) | Add a project admin to a project. |
+| [az dc project admin remove](#az-dc-project-admin-remove) | Remove a project admin from a project. |
 
-## az dc user check
+---
+
+### `az dc user check`
 
 Check if a user has appropriate licenses to use dev box.
 
@@ -40,9 +55,11 @@ az dc user check --user
 
 ```sh
 az dc user check --user user@example.com
+
+# output: user@example.com has valid licenses for dev box: ['SPE_E3']
 ```
 
-## dc box list
+### `az dc box list`
 
 List dev boxes.
 
@@ -73,7 +90,7 @@ List all dev boxes in a dev center belonging to specific users.
 az dc box list -dc MyDevCenter --users userA userB
 ```
 
-## dc box start
+### `az dc box start`
 
 Start dev boxes.
 
@@ -104,7 +121,7 @@ Start all dev boxes in a dev center belonging to specific users.
 az dc box start -dc MyDevCenter --users userA userB
 ```
 
-## dc box stop
+### `az dc box stop`
 
 Stop dev boxes.
 
@@ -135,7 +152,7 @@ Stop all dev boxes in a dev center belonging to specific users.
 az dc box stop -dc MyDevCenter --users userA userB
 ```
 
-## dc project box list
+### `az dc project box list`
 
 List project dev boxes.
 
@@ -165,7 +182,7 @@ List all dev boxes in a project belonging to specific users.
 az dc project box list -dc MyDevCenter -p MyProject --users userA userB
 ```
 
-## dc project box start
+### `az dc project box start`
 
 Start project dev boxes.
 
@@ -195,7 +212,7 @@ Start all dev boxes in a project belonging to specific users.
 az dc project box start -dc MyDevCenter -p MyProject --users userA userB
 ```
 
-## dc project box stop
+### `az dc project box stop`
 
 Stop project dev boxes.
 
@@ -225,7 +242,7 @@ Stop all dev boxes in a project belonging to specific users.
 az dc project box stop -dc MyDevCenter -p MyProject --users userA userB
 ```
 
-## dc project user add
+### `az dc project user add`
 
 Add a dev box user to a project.
 
@@ -243,7 +260,7 @@ Add a dev box user to a project.
 az dc project user add -g projectRG -p MyProject -u me
 ```
 
-## dc project user remove
+### `az dc project user remove`
 
 Remove a dev box user from a project.
 
@@ -260,7 +277,7 @@ Remove a dev box user from a project.
 az dc project user remove -g projectRG -p MyProject -u me
 ```
 
-## dc project admin add
+### `az dc project admin add`
 
 Add a project admin to a project.
 
@@ -277,7 +294,7 @@ Add a project admin to a project.
 az dc project admin add -g projectRG -p MyProject -u me
 ```
 
-## dc project admin remove
+### `az dc project admin remove`
 
 Remove a project admin from a project.
 
