@@ -15,17 +15,281 @@ az extension add --source https://github.com/colbylwilliams/az-devcenter/release
 To update Azure CLI DevCenter Helper extension to the latest version:
 
 ```sh
-az dc update
+az dc upgrade
 ```
 
 or for the latest pre-release version:
 
 ```sh
-az dc update --pre
+az dc upgrade --pre
 ```
 
-## Commands
+# Commands
 
 This extension adds the following commands.  Use `az dc -h` for more information.
 
----
+## az dc user check
+
+Check if a user has appropriate licenses to use dev box.
+
+```sh
+az dc user check --user
+```
+
+#### Examples
+
+```sh
+az dc user check --user user@example.com
+```
+
+## dc box list
+
+List dev boxes.
+
+```sh
+box list --dev-center
+         [--projects]
+         [--pools]
+         [--users]
+```
+
+#### Examples:
+
+List all dev boxes in a dev center.
+
+```sh
+az dc box list -dc MyDevCenter
+```
+
+List all dev boxes in a specific project in a dev center.
+
+```sh
+az dc box list -dc MyDevCenter --projects MyProject
+```
+
+List all dev boxes in a dev center belonging to specific users.
+
+```sh
+az dc box list -dc MyDevCenter --users userA userB
+```
+
+## dc box start
+
+Start dev boxes.
+
+```sh
+box start --dev-center
+          [--projects]
+          [--pools]
+          [--users]
+```
+
+#### Examples:
+
+Start all dev boxes in a dev center.
+
+```sh
+az dc box start -dc MyDevCenter
+```
+
+Start all dev boxes in a specific project in a dev center.
+
+```sh
+az dc box start -dc MyDevCenter --projects MyProject
+```
+
+Start all dev boxes in a dev center belonging to specific users.
+
+```sh
+az dc box start -dc MyDevCenter --users userA userB
+```
+
+## dc box stop
+
+Stop dev boxes.
+
+```sh
+box stop --dev-center
+         [--projects]
+         [--pools]
+         [--users]
+```
+
+#### Examples:
+
+Stop all dev boxes in a dev center.
+
+```sh
+az dc box stop -dc MyDevCenter
+```
+
+Stop all dev boxes in a specific project in a dev center.
+
+```sh
+az dc box stop -dc MyDevCenter --projects MyProject
+```
+
+Stop all dev boxes in a dev center belonging to specific users.
+
+```sh
+az dc box stop -dc MyDevCenter --users userA userB
+```
+
+## dc project box list
+
+List project dev boxes.
+
+```sh
+project box list --dev-center
+                 [--pools]
+                 [--users]
+```
+
+#### Examples:
+
+List all dev boxes in a project.
+
+```sh
+az dc project box list -dc MyDevCenter -p MyProject
+```
+
+List all dev boxes in specific pools in a project.
+
+```sh
+az dc project box list -dc MyDevCenter -p MyProject --pools poolA poolB
+```
+
+List all dev boxes in a project belonging to specific users.
+
+```sh
+az dc project box list -dc MyDevCenter -p MyProject --users userA userB
+```
+
+## dc project box start
+
+Start project dev boxes.
+
+```sh
+project box start --dev-center
+                  [--pools]
+                  [--users]
+```
+
+#### Examples:
+
+Start all dev boxes in a project.
+
+```sh
+az dc project box start -dc MyDevCenter -p MyProject
+```
+
+Start all dev boxes in specific pools in a project.
+
+```sh
+az dc project box start -dc MyDevCenter -p MyProject --pools poolA poolB
+```
+
+Start all dev boxes in a project belonging to specific users.
+
+```sh
+az dc project box start -dc MyDevCenter -p MyProject --users userA userB
+```
+
+## dc project box stop
+
+Stop project dev boxes.
+
+```sh
+project box stop --dev-center
+                 [--pools]
+                 [--users]
+```
+
+#### Examples:
+
+Stop all dev boxes in a project.
+
+```sh
+az dc project box stop -dc MyDevCenter -p MyProject
+```
+
+Stop all dev boxes in specific pools in a project.
+
+```sh
+az dc project box stop -dc MyDevCenter -p MyProject --pools poolA poolB
+```
+
+Stop all dev boxes in a project belonging to specific users.
+
+```sh
+az dc project box stop -dc MyDevCenter -p MyProject --users userA userB
+```
+
+## dc project user add
+
+Add a dev box user to a project.
+
+```sh
+project user add --project
+                 --user-id
+                 [--skip-license-check]
+```
+
+#### Examples:
+
+Add a dev box user to a project.
+
+```sh
+az dc project user add -g projectRG -p MyProject -u me
+```
+
+## dc project user remove
+
+Remove a dev box user from a project.
+
+```sh
+project user remove --project
+                    --user-id
+```
+
+#### Examples:
+
+Remove a dev box user from a project.
+
+```sh
+az dc project user remove -g projectRG -p MyProject -u me
+```
+
+## dc project admin add
+
+Add a project admin to a project.
+
+```sh
+project admin add --project
+                  --user-id
+```
+
+#### Examples:
+
+Add a project admin to a project.
+
+```sh
+az dc project admin add -g projectRG -p MyProject -u me
+```
+
+## dc project admin remove
+
+Remove a project admin from a project.
+
+```sh
+project admin remove --project
+                     --user-id
+```
+
+#### Examples:
+
+Remove a project admin from a project.
+
+```sh
+az dc project admin remove -g projectRG -p MyProject -u me
+```
