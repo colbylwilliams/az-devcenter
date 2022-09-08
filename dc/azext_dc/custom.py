@@ -15,9 +15,12 @@ from ._client_factory import (devcenter_client_factory,
 
 logger = get_logger(__name__)
 
-DEVBOX_USER_ROLE_ID = '45d50f46-0b78-4001-a660-4198cbe8cd05'
-PROJECT_ADMIN_ROLE_ID = '331c37c6-af14-46d9-b9f4-e1909e1b95a0'
+ROLE_ID_DEVBOX_USER = '45d50f46-0b78-4001-a660-4198cbe8cd05'
+ROLE_ID_PROJECT_ADMIN = '331c37c6-af14-46d9-b9f4-e1909e1b95a0'
 
+SERVICE_PLAN_ID_INTUNE_A = 'c1ec4a95-1f05-45b3-a911-aa3fa01094f5'
+SERVICE_PLAN_ID_AAD_PREMIUM = '41781fb2-bc02-4b7c-bd55-b576c07bb09d'
+SERVICE_PLAN_ID_WIN10_PRO_ENT_SUB = '21b439ba-a0ca-424f-a6cc-52f954a5b111'
 
 # def dc_test(cmd, user='me'):
 #     pass
@@ -231,14 +234,20 @@ def _check_user_licenses(cmd, user):
         client = get_graph_client(cmd.cli_ctx)
         result = client._send('GET', f'/users/{user_id}/licenseDetails')  # pylint: disable=protected-access
 
-        licenses = [l for l in result if 'skuPartNumber' in l and l['skuPartNumber'] in ['SPE_E3', 'SPE_E5']]
+        service_plan_ids = []
+        for license in result:
+            service_plan_ids.extend([sp['servicePlanId'] for sp in license['servicePlans']])
 
-        if len(licenses) > 0:
-            logger.info(f'{user} has valid licenses: {[l["skuPartNumber"] for l in licenses]}')
-            return (True, f'{user} has valid licenses: {[l["skuPartNumber"] for l in licenses]}')
+        check_intune = SERVICE_PLAN_ID_INTUNE_A in service_plan_ids
+        check_aad = SERVICE_PLAN_ID_AAD_PREMIUM in service_plan_ids
+        check_win_sub = SERVICE_PLAN_ID_WIN10_PRO_ENT_SUB in service_plan_ids
 
-        logger.info(f'{user} does not have a valid license')
-        return (False, f'{user} does not have a valid license')
+        if check_intune and check_aad and check_win_sub:
+            logger.info(f'{user} has valid licenses to use dev box')
+            return (True, f'{user} has valid licenses to use dev box')
+
+        logger.info(f'{user} does not have a valid license to use dev box')
+        return (False, f'{user} does not have a valid license to use dev box')
 
     except Exception as ex:  # pylint: disable=broad-except
         logger.debug(ex)
@@ -284,11 +293,11 @@ def add_project_user(cmd, resource_group_name, project_name, user_id='me', skip_
         if not check[0]:
             raise CLIError(check[1])
 
-    return _add_project_role(DEVBOX_USER_ROLE_ID, cmd, resource_group_name, project_name, user_id)
+    return _add_project_role(ROLE_ID_DEVBOX_USER, cmd, resource_group_name, project_name, user_id)
 
 
 def remove_project_user(cmd, resource_group_name, project_name, user_id='me'):
-    return _remove_project_role(DEVBOX_USER_ROLE_ID, cmd, resource_group_name, project_name, user_id)
+    return _remove_project_role(ROLE_ID_DEVBOX_USER, cmd, resource_group_name, project_name, user_id)
 
 
 def dc_user_check(cmd, user='me'):
@@ -301,8 +310,8 @@ def dc_user_check(cmd, user='me'):
 
 
 def add_project_admin(cmd, resource_group_name, project_name, user_id='me'):
-    return _add_project_role(PROJECT_ADMIN_ROLE_ID, cmd, resource_group_name, project_name, user_id)
+    return _add_project_role(ROLE_ID_PROJECT_ADMIN, cmd, resource_group_name, project_name, user_id)
 
 
 def remove_project_admin(cmd, resource_group_name, project_name, user_id='me'):
-    return _remove_project_role(PROJECT_ADMIN_ROLE_ID, cmd, resource_group_name, project_name, user_id)
+    return _remove_project_role(ROLE_ID_PROJECT_ADMIN, cmd, resource_group_name, project_name, user_id)

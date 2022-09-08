@@ -3,6 +3,10 @@
 Release History
 ===============
 
+0.0.3
+++++++
++ check for correct licenses
+
 0.0.2
 ++++++
 + list, start, stop boxes at devcenter and project level
