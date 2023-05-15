@@ -22,11 +22,7 @@ def load_arguments(self, _):
                    validator=dc_source_version_validator)
         c.argument('prerelease', options_list=['--pre'], action='store_true',
                    help="The id of the user. If value is 'me', the identity is taken from the authentication "
-                   "context.")
-
-    with self.argument_context('dc user check') as c:
-        c.argument('user', options_list=['--user', '-u'],
-                   help='User ')
+                   'context.')
 
     with self.argument_context('dc box') as c:
         c.argument('project_names', options_list=['--projects'], nargs='*',
@@ -48,12 +44,13 @@ def load_arguments(self, _):
         # c.argument('dev_center', options_list=['--dev-center-name', '--dev-center', '-dc'], help='Project prefix.')
         c.argument('project_name', options_list=['--project-name', '--project', '-p'], help='Name of the project.')
 
-    for scope in ['dc project user', 'dc project admin']:
+    for scope in ['dc devbox-user check', 'dc project devbox-user', 'dc project environments-user', 'dc project admin']:
         with self.argument_context(scope) as c:
             c.argument('user_id', options_list=['--user-id', '--user', '-u'], default='me', validator=user_validator,
                        help="The id of the user. If value is 'me', the identity is taken from the authentication "
-                       "context.")
+                       'context.')
 
-    with self.argument_context('dc project user add') as c:
-        c.argument('skip_license_check', options_list=['--skip-license-check'], action='store_true',
-                   help='Skip license check.')
+    for scope in ['dc project devbox-user add', 'dc project environments-user add']:
+        with self.argument_context(scope) as c:
+            c.argument('skip_license_check', options_list=['--skip-license-check'], action='store_true',
+                       help='Skip license check.')

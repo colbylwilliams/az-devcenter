@@ -3,8 +3,12 @@
 # Licensed under the MIT License.
 # ------------------------------------
 
-from azure.cli.core.commands.client_factory import get_mgmt_service_client
+from azure.cli.core.commands.client_factory import (_prepare_mgmt_client_kwargs_track2, configure_common_settings,
+                                                    get_mgmt_service_client)
 from azure.cli.core.profiles import ResourceType
+from azure.developer.devcenter import DevCenterClient
+from azure.developer.devcenter.operations import DevBoxesOperations, DevCenterOperations, EnvironmentsOperations
+from azure.mgmt.devcenter import DevCenterMgmtClient
 
 
 def resource_client_factory(cli_ctx, subscription_id=None, **_):
@@ -32,48 +36,41 @@ def get_graph_client(cli_ctx):
     return graph_client_factory(cli_ctx)
 
 
-def devcenter_client_factory(cli_ctx, *_):
-    from azext_dc.vendored_sdks.devcenter import DevCenter
-    return get_mgmt_service_client(cli_ctx, DevCenter)
-
-# below from:
-# https://github.com/tbyfield/azure-cli-extensions/blob/main/src/devcenter/azext_devcenter/manual/_client_factory.py
+def cf_dc_mgmt(cli_ctx, *_) -> DevCenterMgmtClient:
+    return get_mgmt_service_client(cli_ctx, DevCenterMgmtClient)
 
 
-def devcenter_dataplane_client_factory(cli_ctx, dev_center, *_):
+def cf_dc_data(cli_ctx, dev_center, *_) -> DevCenterClient:
 
     from azure.cli.core._profile import Profile
 
-    from azext_dc.vendored_sdks.devcenter_dataplane import \
-        DevCenterDataplaneClient
+    # Temporary set to Fidalgo until 1st party app is updated.
+    dev_center_dns_suffix = 'devcenter.azure.com'
+    dev_center_endpoint = f'https://{dev_center_dns_suffix}'
 
     # Temporary set to Fidalgo until 1st party app is updated.
-    cli_ctx.cloud.endpoints.active_directory_resource_id = 'https://devcenter.azure.com'
+    cli_ctx.cloud.endpoints.active_directory_resource_id = dev_center_endpoint
 
     profile = Profile(cli_ctx=cli_ctx)
-    subscription = profile.get_subscription()
-    tenant_id = subscription['tenantId']
-    cloud = subscription['environmentName']
-    dev_center_dns_suffix = get_dns_suffix(cloud)
+    cred, subscription_id, tenant_id = profile.get_login_credentials(resource=dev_center_endpoint)
+    client_kwargs = _prepare_mgmt_client_kwargs_track2(cli_ctx, cred)
 
-    # Override the client to use DevCenter resource rather than ARM's.
-    # The .default scope will be appended by the mgmt service client
-    # cli_ctx.cloud.endpoints.active_directory_resource_id = 'https://devcenter.azure.com'
+    client = DevCenterClient(tenant_id=tenant_id, dev_center=dev_center, credential=cred,
+                             dev_center_dns_suffix=dev_center_dns_suffix, **client_kwargs)
 
-    return get_mgmt_service_client(
-        cli_ctx,
-        DevCenterDataplaneClient,
-        subscription_bound=False,
-        base_url_bound=False,
-        tenant_id=tenant_id,
-        dev_center=dev_center,
-        dev_center_dns_suffix=dev_center_dns_suffix)
+    return client
 
 
-def get_dns_suffix(cloud):
-    if cloud == "Dogfood":
-        return 'devcenter.azure-test.net'
-    return 'devcenter.azure.com'
+def cf_dc_data_dev_center(cli_ctx, dev_center, *_) -> DevCenterOperations:
+    return cf_dc_data(cli_ctx, dev_center).dev_center
+
+
+def cf_dc_data_dev_boxes(cli_ctx, dev_center, *_) -> DevBoxesOperations:
+    return cf_dc_data(cli_ctx, dev_center).dev_boxes
+
+
+def cf_dc_data_environments(cli_ctx, dev_center, *_) -> EnvironmentsOperations:
+    return cf_dc_data(cli_ctx, dev_center).environments
 
 
 # def cf_project_dp(cli_ctx, dev_center, *_):

@@ -6,13 +6,18 @@
 
 from knack.help_files import helps  # pylint: disable=unused-import
 
-# ----------------
+# ----------------------------
 # dc
-# ----------------
+# ----------------------------
 
 helps['dc'] = """
 type: group
 short-summary: Utilities for common or dev center tasks.
+"""
+
+helps['dc version'] = """
+type: command
+short-summary: Show the version of the dc extension.
 """
 
 helps['dc upgrade'] = """
@@ -25,26 +30,26 @@ examples:
     text: az dc upgrade --pre
 """
 
-# ----------------
-# dc user
-# ----------------
+# ----------------------------
+# dc devbox-user
+# ----------------------------
 
-helps['dc user'] = """
+helps['dc devbox-user'] = """
 type: group
-short-summary: Manage users.
+short-summary: Manage dev box users.
 """
 
-helps['dc user check'] = """
+helps['dc devbox-user check'] = """
 type: command
 short-summary: Check if a user has appropriate licenses to use dev box.
 examples:
   - name: Check if a user has appropriate licenses to use dev box.
-    text: az dc user check --user user@example.com
+    text: az dc devbox-user check --user user@example.com
 """
 
-# ----------------
+# ----------------------------
 # dc box
-# ----------------
+# ----------------------------
 
 helps['dc box'] = """
 type: group
@@ -87,18 +92,18 @@ examples:
     text: az dc box stop -dc MyDevCenter --users userA userB
 """
 
-# ----------------
+# ----------------------------
 # dc project
-# ----------------
+# ----------------------------
 
 helps['dc project'] = """
 type: group
 short-summary: Manage projects.
 """
 
-# ----------------
+# ----------------------------
 # dc project box
-# ----------------
+# ----------------------------
 
 
 helps['dc project box'] = """
@@ -143,34 +148,61 @@ examples:
 """
 
 
-# ----------------
-# dc project user
-# ----------------
+# ----------------------------
+# dc project devbox-user
+# ----------------------------
 
-helps['dc project user'] = """
+helps['dc project devbox-user'] = """
 type: group
 short-summary: Manage project dev box users.
 """
 
-helps['dc project user add'] = """
+helps['dc project devbox-user add'] = """
 type: command
 short-summary: Add a dev box user to a project.
 examples:
   - name: Add a dev box user to a project.
-    text: az dc project user add -g projectRG -p MyProject -u me
+    text: az dc project devbox-user add -g projectRG -p MyProject -u me
 """
 
-helps['dc project user remove'] = """
+helps['dc project devbox-user remove'] = """
 type: command
 short-summary: Remove a dev box user from a project.
 examples:
   - name: Remove a dev box user from a project.
-    text: az dc project user remove -g projectRG -p MyProject -u me
+    text: az dc project devbox-user remove -g projectRG -p MyProject -u me
 """
 
-# ----------------
+
+# ----------------------------
+# dc project environments-user
+# ----------------------------
+
+helps['dc project environments-user'] = """
+type: group
+short-summary: Manage project azure deployment environments users.
+"""
+
+helps['dc project environments-user add'] = """
+type: command
+short-summary: Add an azure deployment environments user to a project.
+examples:
+  - name: Add an azure deployment environments user to a project.
+    text: az dc project environments-user add -g projectRG -p MyProject -u me
+"""
+
+helps['dc project environments-user remove'] = """
+type: command
+short-summary: Remove an azure deployment environments user from a project.
+examples:
+  - name: Remove an azure deployment environments user from a project.
+    text: az dc project environments-user remove -g projectRG -p MyProject -u me
+"""
+
+
+# ----------------------------
 # dc project admin
-# ----------------
+# ----------------------------
 
 helps['dc project admin'] = """
 type: group

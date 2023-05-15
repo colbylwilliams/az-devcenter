@@ -1,65 +1,88 @@
 {
     "version": "2.0.0",
+    "type": "shell",
+    "options": {
+        "cwd": "${workspaceFolder}"
+    },
+    "problemMatcher": [],
+    "presentation": {
+        "showReuseMessage": false,
+    },
     "tasks": [
         {
-            "label": "cli: setup azdev",
-            "type": "shell",
-            "command": "source .venv/bin/activate; azdev setup -r ${workspaceFolder} -e dc",
-            "options": {
-                "cwd": "${workspaceFolder}"
+            "label": "azdev: linter",
+            "command": "source .venv/bin/activate; azdev linter dc",
+            "windows": {
+                "command": ".venv\\bin\\activate; azdev linter dc"
             },
-            "presentation": {
-                "showReuseMessage": false,
-            },
-            "dependsOrder": "sequence",
-            "dependsOn": [
-                "cli: create venv",
-                "cli: install azdev"
-            ],
-            "problemMatcher": []
-        },
-        {
-            "label": "cli: install azdev",
-            "type": "shell",
-            "command": "source .venv/bin/activate; pip3 install azdev",
-            "options": {
-                "cwd": "${workspaceFolder}"
-            },
-            "presentation": {
-                "showReuseMessage": false,
+            "icon": {
+                "id": "azure",
+                "color": "terminal.ansiCyan"
             }
         },
         {
-            "label": "cli: create venv",
-            "type": "shell",
+            "label": "azdev: style",
+            "command": "source .venv/bin/activate; azdev style dc",
+            "windows": {
+                "command": ".venv\\bin\\activate; azdev style dc"
+            },
+            "icon": {
+                "id": "azure",
+                "color": "terminal.ansiCyan"
+            }
+        },
+        {
+            "label": "azdev: setup",
+            "detail": "Setup the cli extension development environment",
+            "command": "source .venv/bin/activate; azdev setup -r ${workspaceFolder} -e dc",
+            "windows": {
+                "command": ".venv\\bin\\activate; azdev setup -r ${workspaceFolder} -e dc"
+            },
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "venv: create",
+                "azdev: install"
+            ],
+            "icon": {
+                "id": "azure",
+                "color": "terminal.ansiCyan"
+            }
+        },
+        {
+            "label": "azdev: install",
+            "command": "source .venv/bin/activate; pip3 install azdev",
+            "windows": {
+                "command": ".venv\\bin\\activate; pip3 install azdev"
+            },
+            "icon": {
+                "id": "azure",
+                "color": "terminal.ansiCyan"
+            }
+        },
+        {
+            "label": "venv: create",
             "command": "python3",
             "args": [
                 "-m",
                 "venv",
                 ".venv"
             ],
-            "options": {
-                "cwd": "${workspaceFolder}"
-            },
-            "presentation": {
-                "showReuseMessage": false,
+            "icon": {
+                "id": "terminal",
+                "color": "terminal.ansiMagenta"
             }
         },
         {
-            "label": "cli: delete .venv",
-            "type": "shell",
+            "label": "venv: delete",
             "command": "rm",
             "args": [
                 "-r",
                 ".venv"
             ],
-            "options": {
-                "cwd": "${workspaceFolder}"
-            },
-            "presentation": {
-                "showReuseMessage": false,
-            },
-            "problemMatcher": []
+            "icon": {
+                "id": "terminal",
+                "color": "terminal.ansiMagenta"
+            }
         }
     ]
 }

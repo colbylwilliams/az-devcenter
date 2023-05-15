@@ -16,6 +16,15 @@
         ".venv/include": true,
         ".venv/pyvenv.cfg": true,
     },
+    "python.formatting.autopep8Args": [
+        "--max-line-length=200"
+    ],
+    "isort.args": [
+        "-l",
+        "120",
+        "--lbt",
+        "1"
+    ],
     "restructuredtext.languageServer.disabled": true,
     "restructuredtext.confPath": "",
     "restructuredtext.linter.disabled": true

@@ -35,7 +35,10 @@ CLASSIFIERS = [
 ]
 
 DEPENDENCIES = [
-    'azure-cli-core'
+    'azure-cli-core',
+    'azure-mgmt-devcenter',
+    'azure-developer-devcenter',
+
 ]
 
 with open('README.rst', 'r', encoding='utf-8') as f:
